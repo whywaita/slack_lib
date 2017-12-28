@@ -6,7 +6,7 @@ import (
 	"github.com/nlopes/slack"
 )
 
-func GetFromName(api *slack.Client, ev *slack.MessageEvent) (fromType, name string, err error) {
+func ConvertDisplayChannelName(api *slack.Client, ev *slack.MessageEvent) (fromType, name string, err error) {
 	// identify channel or group (as known as private channel) or DM
 
 	// Channel prefix : C
@@ -57,4 +57,14 @@ func GetFromName(api *slack.Client, ev *slack.MessageEvent) (fromType, name stri
 	}
 
 	return "", "", errors.New("channel not found")
+}
+
+func ConvertDisplayName(api *slack.Client, id string) (string, error) {
+	// user id to display name
+	info, err := api.GetUserInfo(id)
+	if err != nil {
+		return "", err
+	}
+
+	return info.Name, nil
 }
