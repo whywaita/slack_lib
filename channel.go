@@ -2,8 +2,8 @@ package slack_lib
 
 import "github.com/nlopes/slack"
 
-func GetChannel(api *slack.Client, ev *slack.MessageEvent) (fromType, name string, err error) {
-	// 	identify channel (public and private) or or group or DM
+func GetFromName(api *slack.Client, ev *slack.MessageEvent) (fromType, name string, err error) {
+	// identify channel (public and private) or group or DM
 
 	// Channel prefix : C
 	// Group prefix : G
