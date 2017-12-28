@@ -1,9 +1,13 @@
 package slack_lib
 
-import "github.com/nlopes/slack"
+import (
+	"errors"
+
+	"github.com/nlopes/slack"
+)
 
 func GetFromName(api *slack.Client, ev *slack.MessageEvent) (fromType, name string, err error) {
-	// identify channel (public and private) or group or DM
+	// identify channel or group (as known as private channel) or DM
 
 	// Channel prefix : C
 	// Group prefix : G
@@ -18,6 +22,8 @@ func GetFromName(api *slack.Client, ev *slack.MessageEvent) (fromType, name stri
 			}
 
 			name = info.Name
+
+			return fromType, name, nil
 		} else if string(c) == "G" {
 			fromType = "group"
 			info, err := api.GetGroupInfo(ev.Channel)
@@ -27,6 +33,8 @@ func GetFromName(api *slack.Client, ev *slack.MessageEvent) (fromType, name stri
 			}
 
 			name = info.Name
+
+			return fromType, name, nil
 		} else if string(c) == "D" {
 			if ev.Msg.SubType != "" {
 				// SubType is not define user
@@ -39,6 +47,8 @@ func GetFromName(api *slack.Client, ev *slack.MessageEvent) (fromType, name stri
 				}
 
 				name = info.Name
+
+				return fromType, name, nil
 			}
 		} else {
 			fromType = ""
@@ -46,5 +56,5 @@ func GetFromName(api *slack.Client, ev *slack.MessageEvent) (fromType, name stri
 		}
 	}
 
-	return fromType, name, nil
+	return "", "", errors.New("channel not found")
 }
