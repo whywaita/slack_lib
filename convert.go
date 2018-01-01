@@ -54,6 +54,8 @@ func ConvertDisplayChannelName(api *slack.Client, ev *slack.MessageEvent) (fromT
 			fromType = ""
 			name = ""
 		}
+
+		break
 	}
 
 	return "", "", errors.New("channel not found")
