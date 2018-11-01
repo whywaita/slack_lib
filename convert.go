@@ -61,9 +61,20 @@ func ConvertDisplayChannelName(api *slack.Client, ev *slack.MessageEvent) (fromT
 	return "", "", errors.New("channel not found")
 }
 
-func ConvertDisplayUserName(api *slack.Client, ev *slack.MessageEvent) (username, usertype string, err error) {
+func ConvertDisplayUserName(api *slack.Client, ev *slack.MessageEvent, id string) (username, usertype string, err error) {
 	// user id to display name
 
+	if id != "" {
+		// specific id (maybe user)
+		info, err := api.GetUserInfo(id)
+		if err != nil {
+			return "", "", err
+		}
+
+		return info.Name, "user", nil
+	}
+
+	// return self id
 	if ev.Msg.BotID == "B01" {
 		// this is slackbot
 		return "Slack bot", "bot", nil
