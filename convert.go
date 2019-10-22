@@ -7,8 +7,8 @@ import (
 	"github.com/nlopes/slack/slackutilsx"
 )
 
-var (
-	ErrMethodNotSupportedForChannelType = errors.New("method_not_supported_for_channel_type")
+const (
+	ErrMethodNotSupportedForChannelType = "method_not_supported_for_channel_type"
 )
 
 func ConvertDisplayChannelName(api *slack.Client, ev *slack.MessageEvent) (fromType, name string, err error) {
@@ -19,7 +19,7 @@ func ConvertDisplayChannelName(api *slack.Client, ev *slack.MessageEvent) (fromT
 	case slackutilsx.CTypeChannel:
 		fromType = "channel"
 		info, err := api.GetChannelInfo(ev.Channel)
-		if err == ErrMethodNotSupportedForChannelType {
+		if err.Error() == ErrMethodNotSupportedForChannelType {
 			// This error occurred by the private channels only converted from the public channel.
 			// So, this is private channel if this error.
 			info , err := api.GetGroupInfo(ev.Channel)
