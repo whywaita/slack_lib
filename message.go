@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/jinzhu/copier"
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 )
 
 func ConvertUnixToTime(inputTS string) (string, error) {

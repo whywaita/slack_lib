@@ -3,8 +3,8 @@ package slack_lib
 import (
 	"github.com/pkg/errors"
 
-	"github.com/nlopes/slack"
-	"github.com/nlopes/slack/slackutilsx"
+	"github.com/slack-go/slack"
+	"github.com/slack-go/slack/slackutilsx"
 )
 
 const (
